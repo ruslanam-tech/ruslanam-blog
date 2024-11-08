@@ -3,6 +3,7 @@ layout: post
 title:  "Що працює в аффіліейт маркетингу 2024?"
 categories: [ Резюме ]
 image: assets/images/1.webp
+description: "Тренди аффіліейт маркетингу 2024: софт, нутра, е-ком, фінанси, лідген. Трафік з Facebook, Google, TikTok, нові GEO, поради по ШІ та відеокреативи."
 ---
 Ключові моменти з репорту від AW x STM “What’s working in affiliate marketing 2024”.
 
