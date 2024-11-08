@@ -2,7 +2,8 @@ title: "Блог про аффіліейт маркетинг"
 description: "Мій блог присвячений аффіліейт маркетингу та партнерським програмам, де я ділюсь своїм досвідом роботи в CPA мережі, а також корисними порадами для успішного запуску рекламних кампаній. Ви дізнаєтеся про останні тренди в індустрії, ефективні стратегії залучення трафіку та нові можливості для заробітку в інтернеті!"
 email: voronin.ruslan2@gmail.com
 timezone: UTC
-baseurl: "/affiliates-jekyll-theme"
+url: "https://affman.pro"
+baseurl: ""
 permalink: "/:title/"
 logo: 'assets/images/logo.svg'
 favicon: 'assets/images/favicon.ico'
