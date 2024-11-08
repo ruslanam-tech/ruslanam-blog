@@ -136,7 +136,6 @@ small, .small {
 ================================================== */
 .hero {
     background: #fdd93d;
-    padding: 5rem 5rem;
 }
 
 @media only screen and (max-width: 1024px) {
@@ -610,6 +609,37 @@ span.navigation:before {
 }
 
 .hover-opacity:hover {
-    transition: all.3s;
+    transition: all 0.3s;
     opacity:.8;
+}
+
+/* Style for the comment form container */
+/* Комментарии */
+#comments-list {
+  list-style-type: none; /* Убирает маркеры списка */
+  padding: 0;
+  margin-bottom: 30px;
+}
+
+#comments-list li {
+  padding: 10px 0;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #ddd; /* Разделительная линия между комментариями */
+  width: 100%; /* Полная ширина */
+  text-align: left;
+}
+
+#comments-list li strong {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #333; /* Цвет для имени */
+}
+
+/* Форма */
+#comment-form {
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
 }

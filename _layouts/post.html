@@ -56,7 +56,113 @@ post_class: post-template
                 </small>
             </p>
             
-			
+<!-- Firebase App (must be loaded first) -->
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+<!-- Firebase Database -->
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+
+<!-- Comments Section -->
+<div id="comments-section" style="margin-top: 40px;">
+  <!-- Comments Header -->
+  <h3 style="margin-bottom: 15px;">Коментарі</h3>
+
+  <!-- Comments List -->
+  <ul id="comments-list" style="list-style-type: none; padding: 0; margin-bottom: 30px;">
+    <!-- Comments will be dynamically added here -->
+  </ul>
+
+  <hr> <!-- Divider between comments and the form -->
+
+  <!-- Form Header and Comment Form -->
+  <h4 style="margin-bottom: 15px;">Залиште коментар</h4>
+  <form id="comment-form" style="padding: 20px; border: 1px solid #ddd; border-radius: 8px; background-color: #f9f9f9;">
+    <label for="username" style="display: block; margin-bottom: 5px;">Ім'я:</label>
+    <input type="text" id="username" required style="display: block; margin-bottom: 15px; padding: 10px; width: 100%; border-radius: 5px; border: 1px solid #ddd;">
+
+    <label for="comment-text" style="display: block; margin-bottom: 5px;">Коментар:</label>
+    <textarea id="comment-text" required style="display: block; margin-bottom: 15px; padding: 10px; width: 100%; border-radius: 5px; border: 1px solid #ddd;"></textarea>
+
+    <button type="submit" style="padding: 10px 20px; border: none; background-color: #007bff; color: #fff; border-radius: 5px; cursor: pointer;">Відправити</button>
+  </form>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    // Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyBwPZe275ZtFFfCq4NAPdx15rkeF05zXLY",
+      authDomain: "ruslanam-d3e81.firebaseapp.com",
+      databaseURL: "https://ruslanam-d3e81-default-rtdb.europe-west1.firebasedatabase.app",
+      projectId: "ruslanam-d3e81",
+      storageBucket: "ruslanam-d3e81.firebasestorage.app",
+      messagingSenderId: "353757615238",
+      appId: "1:353757615238:web:9c00dae4a50735a10d2d07",
+      measurementId: "G-VFXPEGBZZ2"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
+
+    // Unique identifier for each article
+    const pageIdentifier = "{{ page.url | slugify }}";
+
+    // Firebase reference with page identifier
+    const commentsRef = database.ref("comments/" + pageIdentifier);
+
+    // Load comments when page loads
+    loadComments();
+
+    function loadComments() {
+      const commentsList = document.getElementById("comments-list");
+      commentsList.innerHTML = ""; // Clear existing comments
+
+      commentsRef.on("value", (snapshot) => {
+        snapshot.forEach((childSnapshot) => {
+          const comment = childSnapshot.val();
+          const listItem = document.createElement("li");
+
+          // Style for each comment
+          listItem.style.padding = "10px 0";
+          listItem.style.marginBottom = "15px";
+          listItem.style.borderBottom = "1px solid #ddd"; // Divider below each comment
+          listItem.style.width = "100%";
+          listItem.style.textAlign = "left";
+
+          // Display the name above the comment text
+          listItem.innerHTML = `<strong>${comment.name}</strong> ${comment.text}`;
+          commentsList.appendChild(listItem);
+        });
+      });
+    }
+
+    // Handle form submission
+    const commentForm = document.getElementById("comment-form");
+    if (commentForm) {
+      commentForm.addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        const username = document.getElementById("username").value.trim();
+        const commentText = document.getElementById("comment-text").value.trim();
+
+        if (username && commentText) {
+          commentsRef.push({
+            name: username,
+            text: commentText,
+            timestamp: new Date().toISOString()
+          }).then(() => {
+            document.getElementById("comment-form").reset();
+            loadComments();
+          }).catch((error) => {
+            console.error("Error submitting data:", error);
+          });
+        }
+      });
+    } else {
+      console.error("Comment form not found on the page.");
+    }
+  });
+</script>
             
             <!-- Prev/Next -->
             <div class="row PageNavigation mt-4 prevnextlinks d-flex justify-content-between">
@@ -81,28 +187,15 @@ post_class: post-template
 						<img class="author-thumb" src="{{site.baseurl}}/{{author.avatar}}" alt="{{ author.display_name }}">
 					</div>
 					<div class="col-md-10">
-						<a target="_blank" class="link-dark" href="{{ author.web }}">{{ author.display_name }}</a><a target="_blank" href="{{ author.twitter }}" class="btn follow">Follow</a>
+						<a target="_blank" class="link-dark" href="{{ author.telegram }}">{{ author.display_name }}</a><a target="_blank" href="{{ author.telegram }}" class="btn follow">Підпишись</a>
 						<span class="author-description">{{ author.description }}</span>						
 					</div>
 				</div>				
                 {% endif %}
             
             
-            <!-- Begin Comments
-            ================================================== -->
-            <section>
-            <div id="comments">                          
-                {% include disqus.html %} 
-            </div>
-            </section>
-            <!--End Comments
-            ================================================== -->
-            
-            
-
 		</div>
 		<!-- End Post -->
-
 
         
 
